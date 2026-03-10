@@ -1,0 +1,21 @@
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# env / secrets
+.env
+.env.*
+config.env
+
+# build / coverage
+dist/
+build/
+coverage/
