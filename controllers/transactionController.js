@@ -7,7 +7,9 @@ exports.getUserTransactions = catchAsync(async (req, res) => {
   const transactions = await Transaction.find({
     to: req.user._id,
     transactionStatus: 'completed',
-  }).sort('-transactionDate');
+  })
+    .select('-__v')
+    .sort('-transactionDate');
 
   res.status(200).json({
     status: 'success',
@@ -35,6 +37,8 @@ exports.createTransaction = catchAsync(async (req, res, next) => {
     transactionStatus: 'completed',
     to: recipient._id,
   });
+
+  transaction.__v = undefined;
 
   res.status(201).json({
     status: 'success',

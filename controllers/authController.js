@@ -32,6 +32,8 @@ exports.signup = catchAsync(async (req, res) => {
     donationSlug: `${req.body.username}-donate`,
   });
 
+  newUser.__v = undefined;
+
   createSendToken(newUser, 201, res);
 });
 
@@ -48,6 +50,8 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     $or: [{ username: loginIdentifier }, { email: loginIdentifier }],
   }).select('+password');
+
+  user.__v = undefined;
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect username/email or password', 400));
@@ -72,7 +76,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  const currentUser = await User.findById(decoded.id);
+  const currentUser = await User.findById(decoded.id).select('-__v');
 
   if (!currentUser) {
     return next(new AppError('User no longer exist', 401));
