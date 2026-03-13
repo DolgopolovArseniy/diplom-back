@@ -7,6 +7,7 @@ const app = express();
 
 const globalErrorHandler = require('./controllers/errorController');
 const transactionRouter = require('./routes/transactionRouter');
+const userRouter = require('./routes/userRouter');
 
 app.use(helmet());
 app.use(express.json({ limit: '10kb' }));
@@ -14,6 +15,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use('/api/v1/transactions/', transactionRouter);
+app.use('/api/v1/users/', userRouter);
 
 app.use(globalErrorHandler);
 

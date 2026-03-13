@@ -3,11 +3,11 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
-exports.getUserTransactions = catchAsync(async (req, res, next) => {
+exports.getUserTransactions = catchAsync(async (req, res) => {
   const transactions = await Transaction.find({
     to: req.user._id,
     transactionStatus: 'completed',
-  });
+  }).sort('-transactionDate');
 
   res.status(200).json({
     status: 'success',
