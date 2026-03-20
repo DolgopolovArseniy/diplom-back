@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   donationSlug: {
     type: String,
     unique: true,
+    index: true,
     lowercase: true,
   },
 });
