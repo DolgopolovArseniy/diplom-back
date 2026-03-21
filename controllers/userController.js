@@ -10,12 +10,14 @@ exports.getMe = catchAsync(async (req, res) => {
 });
 
 exports.getUserBySlug = catchAsync(async (req, res, next) => {
-  const userExists = await User.exists({ donationSlug: req.params.slug });
+  const user = await User.findOne({ donationSlug: req.params.slug });
 
-  if (!userExists) return next(new AppError('User not found', 404));
+  if (!user) return next(new AppError('User not found', 404));
 
   res.status(200).json({
     status: 'success',
-    exists: true,
+    data: {
+      user,
+    },
   });
 });
