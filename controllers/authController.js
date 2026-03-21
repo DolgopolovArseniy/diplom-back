@@ -39,8 +39,7 @@ exports.signup = catchAsync(async (req, res) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { password, email, username } = req.body;
-  const loginIdentifier = email || username;
+  const { password, loginIdentifier } = req.body;
 
   if (!loginIdentifier || !password) {
     return next(
